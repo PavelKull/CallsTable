@@ -1,0 +1,167 @@
+.audioPlayer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    width: 352px;
+    height: 48px;
+    background: rgba(234, 240, 250, 1);
+    border-radius: 50px;
+    padding: 0 16px 0 18px;
+}
+.time {
+    width: 38px;
+    margin-right: 12px;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 145%;
+    letter-spacing: 0%;
+    text-align: right;
+    color: rgba(18, 41, 69, 1);
+}
+
+.playButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 8px;
+    border: none;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    background: white;
+    border-radius: 50%;
+    box-sizing: border-box;
+    flex-shrink: 0;
+
+    svg {
+        fill: rgba(0, 44, 251, 1);
+        flex-shrink: 0;
+    }
+}
+
+.progress {
+    width: 164px;
+    height: 4px;
+    border-radius: 50px;
+    background: rgba(173, 191, 223, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.progressBar {
+    width: 100%;
+    height: 100%;
+    -webkit-appearance: none; 
+    background: transparent; 
+    border: none;
+    outline: none;
+    border-radius: 50px;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.progressBar::-webkit-slider-runnable-track {
+    background: transparent;
+    border-radius: 50px;
+    height: 4px;
+}
+
+.progressBar::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    background: transparent; 
+    border: none;
+    width: 0;
+    height: 0;
+}
+
+.progressBar::-moz-range-track {
+    background: transparent;
+    border-radius: 50px;
+    height: 4px;
+}
+
+.progressBar::-moz-range-thumb {
+    background: transparent;
+    border: none;
+    width: 0;
+    height: 0;
+}
+
+.progressBar::-ms-track {
+    background: transparent;
+    border-radius: 50px;
+    height: 4px;
+    border-color: transparent;
+    color: transparent;
+}
+
+.progressBar::-ms-thumb {
+    background: transparent;
+    border: none;
+    width: 0;
+    height: 0;
+}
+
+.deleteButton {
+    background: transparent;
+    border: none;
+    width: 24px;
+    height: 24px;
+    padding: 4px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    svg {
+        width: 14px;
+        height: 14px;
+        fill: #002cfb;
+    }
+
+    &:hover {
+        opacity: 1;
+    }
+
+    &:disabled {
+        opacity: 0.2;
+        cursor: not-allowed;
+    }
+}
+.downloadButton {
+    margin-right: 12px;
+    width: 24px;
+    height: 24px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    svg {
+        width: 14px;
+        height: 14px;
+        fill: rgba(173, 191, 223, 1);
+        transition: fill 0.2s ease, transform 0.2s ease;
+    }
+
+    &:hover svg {
+        fill: rgba(0, 44, 251, 1);
+    }
+
+    &:disabled {
+        cursor: not-allowed;
+
+        svg {
+            opacity: 0.3;
+            transform: none;
+        }
+    }
+}

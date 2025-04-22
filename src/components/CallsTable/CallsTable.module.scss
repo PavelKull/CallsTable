@@ -1,0 +1,144 @@
+.wrapper {
+    width: 1440px;
+}
+
+.tableWrapper {
+    width: 100%;
+    padding-left: 40px;
+    padding: 0px 0px 20px 20px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    overflow-y: auto;
+}
+.headerWithArrow {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    cursor: pointer;
+}
+.lastHeaderTitle {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 19px;
+    cursor: pointer;
+}
+.filters {
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    gap: 12px;
+}
+.table {
+    table-layout: fixed;
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+
+    thead {
+        th {
+            text-align: left;
+            padding: 24px 0px 20px 0;
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 148%;
+            letter-spacing: 0%;
+            color: rgba(94, 119, 147, 1);
+            border-bottom: 1px solid #e0e0e0;
+            position: relative;
+        }
+    }
+
+    tbody {
+        tr {
+            height: 65px;
+            &:hover {
+                background-color: rgba(212, 223, 243, 0.17);
+            }
+        }
+
+        td {
+            height: 65px;
+            padding: 0px 12px 0 px 0;
+            padding-left: 0px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+            vertical-align: middle;
+        }
+    }
+
+    .row {
+        transition: background-color 0.2s ease-in-out;
+    }
+}
+.typeColumn {
+    width: 54px;
+}
+
+.timeColumn {
+    width: 88px;
+}
+
+.employeeColumn {
+    width: 129px;
+}
+.phoneColumn {
+    width: 325px;
+}
+.ratingColumn {
+    width: 161px;
+}
+.sourceColumn {
+    width: 214px;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 140%;
+    letter-spacing: 0%;
+    vertical-align: middle;
+    color: rgba(94, 119, 147, 1);
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.audioColumn {
+    width: 410px;
+    align-items: right;
+}
+.audioCell {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 40px;
+
+    .duration {
+        transition: opacity 0.2s ease;
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .player {
+        transition: opacity 0.2s ease;
+        opacity: 0;
+        visibility: hidden;
+        position: absolute;
+    }
+
+    :global(tr:hover) & {
+        .duration {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .player {
+            opacity: 1;
+            visibility: visible;
+        }
+    }
+}
+.message {
+    margin-top: 20px;
+    color: rgba(94, 119, 147, 1);
+}

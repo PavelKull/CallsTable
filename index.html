@@ -1,0 +1,1116 @@
+<html>
+    <head>
+        <title>Skilla Api</title>
+        <style>
+            body {
+            	font-family: Arial,Helvetica,sans-serif;
+            }
+            .layout__content {
+                display: flex;
+                flex: 1 0 auto;
+                box-sizing: border-box;
+            }
+            .content__menu {
+                display: flex;
+                flex-direction: column;
+                background: #f9f9f9;
+                overflow: hidden !important;
+                bottom: 0;
+            }
+            .layout__left {
+                width: 263px;
+                flex-shrink: 0;
+                position: fixed;
+            	top: 0;
+                box-sizing: border-box;
+            }
+            .content__menu-inner {
+                flex-grow: 1;
+                padding-top: 9px;
+                padding-right: 17px;
+                overflow-y: auto;
+                overflow-x: hidden;
+                max-height: 100%;
+            }
+            .doc-c-doc-menu__item {
+                white-space: normal;
+                margin: 0 0 0 28px;
+            	font-size: 16px;
+            }
+            .doc-c-doc-menu__item .doc-c-link {
+                margin: 10px 0;
+                word-wrap: break-word;
+            	color: #000;
+            	display: block;
+            	text-decoration: none;
+            	font-weight: bold;
+            }
+            .doc-c-doc-menu__item .doc-c-link:hover {
+            	color: #d00;
+            }
+            .doc-c-doc-menu__item .doc-c-link.sub {
+            	margin-left: 20px;
+            	font-size: 14px;
+            	font-weight: normal;
+            }
+            .doc-c-headers {
+                font-size: 28px;
+                line-height: 29px;
+                margin-bottom: 16px;
+            }
+            .layout__main {
+                margin-left: 263px;
+            	padding-left: 40px;
+            	width: 100%;
+            }
+            .doc-c-headers_mod_h3 {
+                margin-top: 30px;
+                font-size: 20px;
+                line-height: 25px;
+            }
+            .doc-c-codeblock {
+                padding: 10px;
+                margin: 10px 0;
+                background-color: #f8f8f8;
+                font-family: courier,sans-serif;
+                font-size: 90%;
+                word-break: break-all;
+                overflow-x: auto;
+                position: relative;
+            	white-space: normal;
+            	color: #000;
+            	font-size: 15px;
+            	line-height: 18px;
+            }
+            .doc-c-codeblock {
+                font-family: courier,sans-serif;
+                font-size: 15px;
+                word-break: break-all;
+            }
+            .doc-c-codeblock code span {
+            	display: block;
+            }
+            .doc-c-table__td {
+                font-size: 13px;
+                padding: 8px 10px;
+            	line-height: 18px;
+            	vertical-align: top;
+            }
+            .doc-c-table__td ul li span {
+            	display: inline-block;
+            	background-color: #f8f8f8;
+            	padding: 3px;
+            	font-weight: bold;
+            }
+            .doc-c-table__td ul {
+            	margin: 0;
+            	padding-left: 10px;
+            }
+            .doc-c-table__td ul li {
+            	margin-bottom: 5px;
+            }
+            .doc-c-codeblock.answer code {
+            	white-space: pre;
+            }
+            .doc-c-table__td:first-child {
+            	font-weight: bold;
+            }
+            .r-block {
+            	padding: 10px;
+            	border-radius: 10px;
+            	margin-bottom: 15px;
+            	background: #f5f9f4;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="layout__content">
+            <div class="layout__left content__menu">
+                <div class="content__menu-inner">
+                    <div class="doc-c-doc-menu__item">
+                        <a class="doc-c-link" href="#mango">Mango</a>
+                        <a class="doc-c-link sub" href="#mango_list"
+                            >Получить список</a
+                        >
+                        <a class="doc-c-link sub" href="#mango_download"
+                            >Скачать список (xlsx)</a
+                        >
+                        <a class="doc-c-link sub" href="#mango_search"
+                            >Поиск звонка</a
+                        >
+                        <a class="doc-c-link sub" href="#mango_record"
+                            >Получить запись</a
+                        >
+                        <a class="doc-c-link sub" href="#callback"
+                            >Инициировать звонок</a
+                        >
+                        <a class="doc-c-link sub" href="#mango_abuse"
+                            >Жалоба на звонок</a
+                        >
+                        <a class="doc-c-link sub" href="#mango_answer_abuse"
+                            >Ответ на жалобу</a
+                        >
+                    </div>
+                    <div class="doc-c-doc-menu__item">
+                        <a class="doc-c-link" href="#partner">Партнер</a>
+                        <a class="doc-c-link sub" href="#persons_list"
+                            >Список сотрудников</a
+                        >
+                        <a class="doc-c-link sub" href="#profile">Профиль</a>
+                        <a class="doc-c-link sub" href="#menu">Меню</a>
+                    </div>
+                </div>
+            </div>
+            <div class="layout__main">
+                <h2 class="doc-c-headers">Skilla Api</h2>
+                <div>
+                    Запросы отправляются методом POST. Каждый запрос должен
+                    содержать
+                    <pre class="doc-c-codeblock">
+				<code>Authorization: Bearer token</code>
+			</pre>
+                </div>
+                <div class="r-block">
+                    <a name="mango"></a>
+                    <h2 class="doc-c-headers">Mango</h2>
+                    <div>Работа со звонками</div>
+                    <a name="mango_list"></a>
+                    <h3 class="doc-c-headers_mod_h3">
+                        Получить список звонков
+                    </h3>
+                    <pre class="doc-c-codeblock">
+		<code>
+		https://api.skilla.ru/mango/getList
+		<span> ? <b>date_start</b>=&lt;начальная дата&gt;</span>
+		<span> & <b>date_end</b>=&lt;конечная дата&gt;</span>
+		<span> & <b>in_out</b>=&lt;признак входящего или исходящего звонка&gt;</span>
+		</code>
+	</pre>
+                    <table>
+                        <tr>
+                            <td class="doc-c-table__td">
+                                <b>date_start</b>
+                            </td>
+                            <td class="doc-c-table__td">
+                                Начальная дата. Формат YYYY-MM-DD
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="doc-c-table__td">
+                                <b>date_end</b>
+                            </td>
+                            <td class="doc-c-table__td">
+                                Конечная дата. Формат YYYY-MM-DD
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="doc-c-table__td">
+                                <b>in_out</b>
+                            </td>
+                            <td class="doc-c-table__td">
+                                <p>Признак входящего или исходящего звонка.</p>
+                                <p>Допустимые значения:</p>
+                                <ul>
+                                    <li><span>1</span> - входящий звонок</li>
+                                    <li><span>0</span> - исходящий звонок</li>
+                                    <li><span>пусто</span> - все звонки</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="doc-c-table__td">
+                                <b>limit</b>
+                            </td>
+                            <td class="doc-c-table__td">
+                                Число записей (50 по умолчанию)<br />
+                                Необязательный параметр.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="doc-c-table__td">
+                                <b>offset</b>
+                            </td>
+                            <td class="doc-c-table__td">
+                                С какой записи идет выборка<br />
+                                Необязательный параметр.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="doc-c-table__td">
+                                <b>sort_by</b>
+                            </td>
+                            <td class="doc-c-table__td">
+                                Сортировка, возможные значения: date и
+                                duration<br />
+                                Необязательный параметр.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="doc-c-table__td">
+                                <b>order</b>
+                            </td>
+                            <td class="doc-c-table__td">
+                                Сортировка по убыванию или возрастанию,
+                                возможные значения: ASC и DESC<br />
+                                Необязательный параметр.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="doc-c-table__td">
+                                <b>status</b>
+                            </td>
+                            <td class="doc-c-table__td">
+                                Статус звонка, возможные значения:
+                                success(дозвонился) и fail(пропущенный)<br />
+                                Необязательный параметр.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="doc-c-table__td">
+                                <b>from_type[]</b><br />(массив)
+                            </td>
+                            <td class="doc-c-table__td">
+                                Тип звонка<br />
+                                <p>Допустимые значения:</p>
+                                <ul>
+                                    <li><span>clients</span> - клиенты</li>
+                                    <li>
+                                        <span>new_clients</span> - новые клиенты
+                                    </li>
+                                    <li><span>workers</span> - рабочие</li>
+                                    <li><span>app</span> - приложение</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="doc-c-table__td">
+                                <b>from_persons[]</b><br />(массив)
+                            </td>
+                            <td class="doc-c-table__td">
+                                ID сотрудников<br />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="doc-c-table__td">
+                                <b>sources[]</b><br />(массив)
+                            </td>
+                            <td class="doc-c-table__td">
+                                Источник звонка<br />
+                                <p>Допустимые значения:</p>
+                                <ul>
+                                    <li><span>from_site</span> - с сайта</li>
+                                    <li><span>yandex</span> - yandex номер</li>
+                                    <li><span>google</span> - google номер</li>
+                                    <li><span>12345678</span> - номер линии</li>
+                                    <li><span>empty</span> - без источника</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="doc-c-table__td">
+                                <b>duration[gte]</b>
+                            </td>
+                            <td class="doc-c-table__td">
+                                Продолжительность звонка больше или равна
+                                заданного значение в секундах. <br />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="doc-c-table__td">
+                                <b>duration[lte]</b>
+                            </td>
+                            <td class="doc-c-table__td">
+                                Продолжительность звонка меньше или равна
+                                заданного значение в секундах. <br />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="doc-c-table__td">
+                                <b>errors[]</b><br />(массив)
+                            </td>
+                            <td class="doc-c-table__td">
+                                Ошибки звонка<br />
+                                <p>Допустимые значения:</p>
+                                <ul>
+                                    <li><span>noerrors</span> - без ошибок</li>
+                                    <li>
+                                        <span>noscript</span> - скрипт не
+                                        использован
+                                    </li>
+                                    <li>
+                                        <span>timeover</span> - Превышено время
+                                        ожидания в очереди удержания
+                                    </li>
+                                    <li>
+                                        <span>notavailable</span> - Вызываемый
+                                        номер недоступен
+                                    </li>
+                                    <li>
+                                        <span>noanswer</span> - Вызов не получил
+                                        ответа в течение времени ожидания
+                                    </li>
+                                    <li>
+                                        <span>subscribercompleted</span> - Вызов
+                                        завершен вызывающим абонентом
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="doc-c-table__td">
+                                <b>results[]</b><br />(массив)
+                            </td>
+                            <td class="doc-c-table__td">
+                                Результат звонка<br />
+                                <p>Допустимые значения:</p>
+                                <ul>
+                                    <li><span>order</span> - оформлен заказ</li>
+                                    <li>
+                                        <span>message</span> - создано обращение
+                                    </li>
+                                    <li>
+                                        <span>preorder</span> - предварительный
+                                        заказ
+                                    </li>
+                                    <li>
+                                        <span>candidate</span> - добавлен
+                                        кандидат
+                                    </li>
+                                    <li>
+                                        <span>candidateMessage</span> -
+                                        обращение от соискателя
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="doc-c-table__td">
+                                <a name="mango_search"></a>
+                                <b>search</b>
+                            </td>
+                            <td class="doc-c-table__td">
+                                Для поиска просто добавляем строку поиска
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="doc-c-table__td">
+                                <b>ids[]</b><br />(массив)
+                            </td>
+                            <td class="doc-c-table__td">ID звонков<br /></td>
+                        </tr>
+                        <tr>
+                            <td class="doc-c-table__td">
+                                <a name="mango_download"></a>
+                                <b>xls</b>
+                            </td>
+                            <td class="doc-c-table__td">
+                                Добавить со значением <strong>1</strong><br />
+                                Отдает список по фильтрам в формате xlsx<br />
+                                (можно указать массив id звонков выбранные
+                                чекбоксом)
+                            </td>
+                        </tr>
+                    </table>
+                    <div>
+                        Пример ответа:
+                        <pre class="doc-c-codeblock answer">
+		<code>
+{
+"total_rows": "468",
+	"results": [
+		{
+			"id": 4888120,
+			"partnership_id": "136",
+			"partner_data": {
+				"id": "336",
+				"name": "ИП Василек",
+				"phone": "7484xxxxxx"
+			},
+			"date": "2022-04-19 12:10:08",
+			"date_notime": "2022-04-19",
+			"time": 58,
+			"from_number": "79315xxxxxx",
+			"from_extension": "",
+			"to_number": "sip:hr_xxx@vpbx400105738.mangosip.ru",
+			"to_extension": "671",
+			"is_skilla": 0,
+			"status": "Дозвонился",
+			"record": "MToxMDA2NzYxNToxNDM0ODcwNDQzMzow",
+			"line_number": "sip:userxx@vpbx400105738.mangosip.ru",
+			"line_name": "название линии(источник)",
+			"in_out": 1,
+			"from_site": 0,
+			"source": "",
+			"errors": [],
+			"disconnect_reason": "",
+			"results": [],
+			"stages": [],
+			"abuse": {
+				"date": "2022-05-17 14:35:05",
+				"person_name": "Никита",
+				"message": "Тестовая жалоба на звонок. Тест тест, можно не отвечать.",
+				"support_read_status": 1,
+				"support_answer_status": 1,
+				"answers": [
+					{
+						"message": "Уважаемый Никита. Проверили.",
+						"from_support": 1,
+						"support_read_status": 1,
+						"person_read_status": 1
+					}
+				]
+			},
+			"contact_name": "",
+			"contact_company": "",
+			"person_id": 4042,
+			"person_name": "Татьяна",
+			"person_surname": "Михалкович",
+			"person_avatar": "https://lk.skilla.ru/img/noavatar.jpg"
+		},
+	]
+}
+		</code>
+	</pre>
+                    </div>
+                    <table>
+                        <tr>
+                            <td class="doc-c-table__td">total_rows</td>
+                            <td class="doc-c-table__td">
+                                Всего записей по запросу
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="doc-c-table__td">results</td>
+                            <td class="doc-c-table__td">Массив записей</td>
+                        </tr>
+                        <tr>
+                            <td class="doc-c-table__td">id</td>
+                            <td class="doc-c-table__td">id звонка</td>
+                        </tr>
+                        <tr>
+                            <td class="doc-c-table__td">partnership_id</td>
+                            <td class="doc-c-table__td">id партнера</td>
+                        </tr>
+                        <tr>
+                            <td class="doc-c-table__td">partner_data</td>
+                            <td class="doc-c-table__td">
+                                Маассив данных о партнере(id, name, phone).<br />
+                                Данные отличаются от текущего партнера, если
+                                принят звонок другого партнера.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="doc-c-table__td">date</td>
+                            <td class="doc-c-table__td">дата и время звонка</td>
+                        </tr>
+                        <tr>
+                            <td class="doc-c-table__td">date_notime</td>
+                            <td class="doc-c-table__td">дата звонка</td>
+                        </tr>
+                        <tr>
+                            <td class="doc-c-table__td">time</td>
+                            <td class="doc-c-table__td">длительность звонка</td>
+                        </tr>
+                        <tr>
+                            <td class="doc-c-table__td">from_number</td>
+                            <td class="doc-c-table__td">
+                                номер с которого был звонок
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="doc-c-table__td">from_extension</td>
+                            <td class="doc-c-table__td">
+                                внутренний номер с которого был звонок
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="doc-c-table__td">to_number</td>
+                            <td class="doc-c-table__td">
+                                номер на который был звконок
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="doc-c-table__td">to_extension</td>
+                            <td class="doc-c-table__td">
+                                внутренний номер на который был звконок
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="doc-c-table__td">is_skilla</td>
+                            <td class="doc-c-table__td">
+                                Признак того, что звонок ушел в КЦ
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="doc-c-table__td">status</td>
+                            <td class="doc-c-table__td">
+                                статус звонка
+                                <p>Возможные значения:</p>
+                                <ul>
+                                    <li><span>Не дозвонился</span></li>
+                                    <li><span>Дозвонился</span></li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="doc-c-table__td">record</td>
+                            <td class="doc-c-table__td">id записи звонка</td>
+                        </tr>
+                        <tr>
+                            <td class="doc-c-table__td">line_number</td>
+                            <td class="doc-c-table__td">Номер линии звонка</td>
+                        </tr>
+                        <tr>
+                            <td class="doc-c-table__td">in_out</td>
+                            <td class="doc-c-table__td">
+                                Признак входящего или исходящего звонка
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="doc-c-table__td">from_site</td>
+                            <td class="doc-c-table__td">
+                                Признак, что звонок с сайта
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="doc-c-table__td">source</td>
+                            <td class="doc-c-table__td">Источник</td>
+                        </tr>
+                        <tr>
+                            <td class="doc-c-table__td">errors</td>
+                            <td class="doc-c-table__td">
+                                Оишбки, массив
+                                <p>Пример:</p>
+                                <pre class="doc-c-codeblock answer">
+				<code>
+"errors": [
+	{
+		"title": "Ошибка 1"
+	},
+	{
+		"title": "Ошибка 2"
+	}
+],
+				</code>
+				</pre>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="doc-c-table__td">disconnect_reason</td>
+                            <td class="doc-c-table__td">
+                                Причина дисконнекта, если звонок не состоялся
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="doc-c-table__td">result</td>
+                            <td class="doc-c-table__td">
+                                Итог звонка, массив
+                                <p>Пример:</p>
+                                <pre class="doc-c-codeblock answer">
+				<code>
+"results": [
+	{
+		"type": "is_new",
+		"title": "Новый",
+		"tooltip": ""
+	}
+],
+				</code>
+				</pre>
+                                <ul>
+                                    <li>
+                                        <span>type</span> - тип итога:
+                                        <ul>
+                                            <li>
+                                                <span>is_new</span> - новый
+                                                звонок
+                                            </li>
+                                            <li>
+                                                <span>message</span> - обращение
+                                            </li>
+                                            <li>
+                                                <span>order</span> - создан
+                                                заказ
+                                            </li>
+                                            <li>
+                                                <span>preorder</span> - создан
+                                                предзаказ
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li><span>title</span> - заголовок</li>
+                                    <li>
+                                        <span>tooltip</span> - всплывающая
+                                        подсказка(если есть)
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="doc-c-table__td">stages</td>
+                            <td class="doc-c-table__td">
+                                Операторы пропустившие звонок, массив
+                                <p>Пример:</p>
+                                <pre class="doc-c-codeblock answer">
+				<code>
+"stages": [
+	{
+		"person_name": "Имя",
+		"person_surname": "Фамилия",
+		"person_mango_phone": "Внутренний номер острудника",
+		"duration": "Длительность дозвона",
+		"disconnect_reason": "Причина дисконнекта"
+	}
+],
+				</code>
+				</pre>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="doc-c-table__td">abuse</td>
+                            <td class="doc-c-table__td">
+                                Жалоба от директора на звонок
+                                <p>Пример:</p>
+                                <pre class="doc-c-codeblock answer">
+				<code>
+"abuse": {
+	"date": "2022-05-17 14:35:05", //Время подачи жалобы
+	"person_name": "Никита",  //Имя подавшего жалобу
+	"message": "Тестовая жалоба на звонок. Тест тест, можно не отвечать.",  //Сама жалоба
+	"support_read_status": 1, //Статус прочтения жалобы поддержкой
+	"support_answer_status": 1,  //Статус ответа на жалобу
+	"answers": [  //Ответы
+		{
+			"message": "Уважаемый Никита. Проверили.", //Текст ответа
+			"from_support": 1, //Сообщение от поддержки 1, сообщение от директора 0
+			"support_read_status": 1, //Статус прочтения сообщения поддержкой
+			"person_read_status": 1 //Статус прочтения сообщения директором
+		}
+	]
+},
+				</code>
+				</pre>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="doc-c-table__td">contact_name</td>
+                            <td class="doc-c-table__td">
+                                Имя абонента (если определено)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="doc-c-table__td">contact_company</td>
+                            <td class="doc-c-table__td">
+                                Название компании (если определено)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="doc-c-table__td">person_id</td>
+                            <td class="doc-c-table__td">id сотрудника</td>
+                        </tr>
+                        <tr>
+                            <td class="doc-c-table__td">person_name</td>
+                            <td class="doc-c-table__td">Имя сотрудника</td>
+                        </tr>
+                        <tr>
+                            <td class="doc-c-table__td">person_surname</td>
+                            <td class="doc-c-table__td">Фамилия сотрудника</td>
+                        </tr>
+                        <tr>
+                            <td class="doc-c-table__td">person_avatar</td>
+                            <td class="doc-c-table__td">Аватар сотрудника</td>
+                        </tr>
+                    </table>
+                    <a name="mango_record"></a>
+                    <h3 class="doc-c-headers_mod_h3">Получить запись звонка</h3>
+                    <pre class="doc-c-codeblock">
+		<code>
+		https://api.skilla.ru/mango/getRecord
+		<span> ? <b>record</b>=&lt;id записи&gt;</span>
+		<span> & <b>partnership_id</b>=&lt;id партнера&gt;</span>
+		</code>
+	</pre>
+                    <table>
+                        <tr>
+                            <td class="doc-c-table__td">
+                                <b>record</b>
+                            </td>
+                            <td class="doc-c-table__td">
+                                id записи, есть в в списке звонков - record
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="doc-c-table__td">
+                                <b>partnership_id</b>
+                            </td>
+                            <td class="doc-c-table__td">
+                                id партнера, есть в в списке звонков -
+                                partnership_id
+                            </td>
+                        </tr>
+                    </table>
+                    <div>
+                        <p>В ответ возвращается файл в формате mp3.</p>
+                        <p>
+                            Заголоки:<br />
+                            Content-type: audio/mpeg, audio/x-mpeg,
+                            audio/x-mpeg-3, audio/mpeg3<br />
+                            Content-Transfer-Encoding: binary<br />
+                            Content-Disposition: filename="record.mp3"<br />
+                        </p>
+                    </div>
+                    <a name="callback"></a>
+                    <h3 class="doc-c-headers_mod_h3">Инициировать звонок</h3>
+                    <pre class="doc-c-codeblock">
+		<code>
+		https://api.skilla.ru/mango/getCallback
+		<span> ? <b>phone</b>=&lt;номер телефона&gt;</span>
+		</code>
+	</pre>
+                    <table>
+                        <tr>
+                            <td class="doc-c-table__td">
+                                <b>phone</b>
+                            </td>
+                            <td class="doc-c-table__td">номер абонента</td>
+                        </tr>
+                    </table>
+                    <div>
+                        <p>
+                            В ответ должны получить json данные { "success":
+                            true }
+                        </p>
+                    </div>
+
+                    <a name="mango_abuse"></a>
+                    <h3 class="doc-c-headers_mod_h3">Жалоба на звонок</h3>
+                    <pre class="doc-c-codeblock">
+		<code>
+		https://api.skilla.ru/mango/sendAbuse
+		<span> ? <b>mango_id</b>=&lt;id звонка&gt;</span>
+		</code>
+	</pre>
+                    <div>
+                        <p>
+                            Жалоба подается директором на звонок с пометкой
+                            is_skilla (звонок принят КЦ), на котором есть запись
+                            разговора.
+                        </p>
+                    </div>
+                    <div>
+                        <p>
+                            В ответ должны получить json данные { "result": true
+                            }
+                        </p>
+                    </div>
+
+                    <a name="mango_answer_abuse"></a>
+                    <h3 class="doc-c-headers_mod_h3">Ответ на жалобу</h3>
+                    <pre class="doc-c-codeblock">
+		<code>
+		https://api.skilla.ru/mango/answerAbuse
+		</code>
+	</pre>
+                    <div>
+                        <p>Параметры передаются в теле запроса.</p>
+                        <ul>
+                            <li><span>mango_id</span> - id звонка</li>
+                            <li><span>message</span> - ответ на жалобу</li>
+                            <li>
+                                <span>penalty</span> - штраф (если назначаем)
+                            </li>
+                            <li>
+                                <span>penalty_comment</span> - комментарий к
+                                штрафу, обязателен, если назначаем штраф.
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <p>
+                            В ответ должны получить json данные { "result": true
+                            }
+                        </p>
+                    </div>
+
+                    <a name="mango_lines"></a>
+                    <h3 class="doc-c-headers_mod_h3">
+                        Список линий(источников)
+                    </h3>
+                    <pre class="doc-c-codeblock">
+		<code>
+		https://api.skilla.ru/mango/getLines
+		</code>
+	</pre>
+                    <div>
+                        Пример ответа:
+                        <pre class="doc-c-codeblock answer">
+		<code>
+{
+    "result": [
+        {
+            "number": "73842326935",
+            "name": "ЯНДЕКС"
+        },
+        {
+            "number": "73842326925",
+            "name": "GOOGLE (РАБ5-2)"
+        },
+        {
+            "number": "sip:user1@kemerovo.mangosip.ru",
+            "name": "2ГИС 233-234"
+        },
+	]
+}
+		</code>
+	</pre>
+                    </div>
+                </div>
+                <div class="r-block">
+                    <a name="partner"></a>
+                    <h2 class="doc-c-headers">Партнер</h2>
+                    <div>Работа с партнером</div>
+                    <a name="persons_list"></a>
+                    <h3 class="doc-c-headers_mod_h3">Список сотрудников</h3>
+                    <pre class="doc-c-codeblock">
+		<code>
+		https://api.skilla.ru/partnership/getPersonsList
+		<span> ? <b>position[]</b>=&lt;должность&gt;</span>
+		<span> & <b>is_blocked</b>=&lt;признак блокировки&gt;</span>
+		</code>
+	</pre>
+                    <table>
+                        <tr>
+                            <td class="doc-c-table__td">
+                                <b>is_blocked</b>
+                            </td>
+                            <td class="doc-c-table__td">
+                                Признак блокировки
+                                <p>Возможные значения:</p>
+                                <ul>
+                                    <li><span>1</span> - заблокирован</li>
+                                    <li><span>0</span> - не заблокирован</li>
+                                </ul>
+                                Необязательный параметр
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="doc-c-table__td">
+                                <b>position</b>
+                            </td>
+                            <td class="doc-c-table__td">
+                                Должность (массив)
+                                <p>Возможные значения:</p>
+                                <ul>
+                                    <li><span>accountant</span></li>
+                                    <li><span>callleader</span></li>
+                                    <li><span>callmanager</span></li>
+                                    <li><span>chief-accountant</span></li>
+                                    <li><span>controller</span></li>
+                                    <li><span>copywriter</span></li>
+                                    <li><span>designer</span></li>
+                                    <li><span>director</span></li>
+                                    <li><span>frmanager</span></li>
+                                    <li><span>hr</span></li>
+                                    <li><span>hr-assist</span></li>
+                                    <li><span>leader</span></li>
+                                    <li><span>mainoperator</span></li>
+                                    <li><span>manager</span></li>
+                                    <li><span>moderator</span></li>
+                                    <li><span>operator</span></li>
+                                    <li><span>sale-manager</span></li>
+                                    <li><span>seo</span></li>
+                                    <li><span>skillmanager</span></li>
+                                    <li><span>submoderator</span></li>
+                                    <li><span>supervisor</span></li>
+                                    <li><span>worksupport</span></li>
+                                </ul>
+                                Необязательный параметр
+                            </td>
+                        </tr>
+                    </table>
+                    <div>
+                        Пример ответа:
+                        <pre class="doc-c-codeblock answer">
+		<code>
+[
+	{
+		"id": "658",
+		"name": "Яна",
+		"surname": "",
+		"patronymic": "",
+		"login": "login",
+		"phone": "79650xxxxxx",
+		"mango_phone": "",
+		"email": "",
+		"position": "operator",
+		"is_blocked": "1",
+		"avatar": "https://lk.skilla.ru/img/noavatar.jpg"
+	},
+]
+		</code>
+	</pre>
+                    </div>
+
+                    <a name="profile"></a>
+                    <h3 class="doc-c-headers_mod_h3">
+                        Профиль пользователя + данные партнера
+                    </h3>
+                    <pre class="doc-c-codeblock">
+		<code>
+		https://api.skilla.ru/partnership/getProfile
+		</code>
+	</pre>
+                    <div>
+                        Пример ответа:
+                        <pre class="doc-c-codeblock answer">
+		<code>
+{
+	"id": "650",
+	"name": "Артур",
+	"surname": "Утенков",
+	"patronymic": "Николаевич",
+	"login": "dir**",
+	"phone": "7917***",
+	"mango_phone": "1**",
+	"email": "director@**ice.ru",
+	"position": "director",
+	"is_blocked": "0",
+	"avatar": "https://lk.skilla.ru/img/noavatar.jpg",
+	"header_notice": {
+		"title": "",
+		"button_name": "",
+		"button_link": ""
+	},
+	"partnership": {
+		"id": "136",
+		"name": "ООО \"ГРУЗЧИКОВ-СЕРВИС СПБ\"",
+		"brand_name": "Грузчиков-Сервис",
+		"brand_ico": "https://lk.skilla.ru/documents/brands/1/ico.png",
+		"city": "Санкт-Петербург",
+		"phone": "Санкт-Петербург",
+		"email": "info@gruzchikov-service.ru",
+		"adress": "195027 г. Санкт-Петербург, пр-кт Энергетиков, дом 10А, офис 416",
+		"ur_adress": "195027 г. Санкт-Петербург, пр-кт Энергетиков, дом 10А, офис 420",
+		"office_adress": "195027 г. Санкт-Петербург, пр-кт Энергетиков, дом 10А, офис 416",
+		"inn": "7806268944",
+		"kpp": "780601001",
+		"rs": "40702810703500018047",
+		"bank": "ТОЧКА ПАО БАНКА \"ФК ОТКРЫТИЕ\"",
+		"ks": "30101810845250000999",
+		"bik": "044525999",
+		"ogrn": "1177847173910"
+	}
+}
+		</code>
+	</pre>
+                        <table>
+                            <tr>
+                                <td class="doc-c-table__td">
+                                    <b>header_notice</b>
+                                </td>
+                                <td class="doc-c-table__td">
+                                    Уведомление в шапку(если есть)
+                                    <table>
+                                        <tr>
+                                            <td class="doc-c-table__td">
+                                                <b>title</b>
+                                            </td>
+                                            <td class="doc-c-table__td">
+                                                Заголовок уведомления
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="doc-c-table__td">
+                                                <b>button_name</b>
+                                            </td>
+                                            <td class="doc-c-table__td">
+                                                Название кнопки (если есть)
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="doc-c-table__td">
+                                                <b>button_link</b>
+                                            </td>
+                                            <td class="doc-c-table__td">
+                                                Ссылка для кнопки
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <a name="menu"></a>
+                    <h3 class="doc-c-headers_mod_h3">
+                        Пролучение меню пользователя
+                    </h3>
+                    <pre class="doc-c-codeblock">
+		<code>
+		https://api.skilla.ru/partnership/getMenu
+		</code>
+	</pre>
+                    <div>
+                        Пример ответа:
+                        <pre class="doc-c-codeblock answer">
+		<code>
+[
+		{
+		"url": "/director/",
+		"icon": "",
+		"name": "Итоги",
+		"is_new": false
+	},
+	{
+		"url": "#",
+		"icon": "",
+		"name": "Отчеты",
+		"submenu": [
+			{
+				"url": "/director/payments/",
+				"icon": "",
+				"name": "Бригадиры",
+				"is_new": false
+			},
+		],
+		"is_new": false
+	},
+	{
+		"url": "/director/settings/?action=settings2",
+		"icon": "",
+		"name": "Настройки",
+		"is_new": false
+	}
+]
+		</code>
+	</pre>
+                    </div>
+                    <table>
+                        <tr>
+                            <td class="doc-c-table__td">url</td>
+                            <td class="doc-c-table__td">url</td>
+                        </tr>
+                        <tr>
+                            <td class="doc-c-table__td">icon</td>
+                            <td class="doc-c-table__td">иконка меню</td>
+                        </tr>
+                        <tr>
+                            <td class="doc-c-table__td">name</td>
+                            <td class="doc-c-table__td">название меню</td>
+                        </tr>
+                        <tr>
+                            <td class="doc-c-table__td">is_new</td>
+                            <td class="doc-c-table__td">
+                                признак нового в разделе
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="doc-c-table__td">submenu</td>
+                            <td class="doc-c-table__td">подменю</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

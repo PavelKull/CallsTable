@@ -1,0 +1,55 @@
+.callTypeSelect {
+    width: 200px;
+    position: relative;
+    font-family: sans-serif;
+    width: 133px;
+    margin-bottom: 19px;
+
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    text-align: Left;
+}
+
+.selectHeader {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 79;
+    height: 21;
+    gap: 4px;
+    background: transparent;
+    cursor: pointer;
+    color: rgba(94, 119, 147, 1);
+}
+
+.dropdown {
+    overflow: hidden;
+    margin-top: 12px;
+    box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.08);
+    position: absolute;
+    width: 133;
+    height: 104;
+
+    border-radius: 8px;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #fff;
+    z-index: 10;
+    list-style-type: none;
+    li {
+        padding: 8px 12px;
+        cursor: pointer;
+        height: 32px;
+
+        &:hover {
+            background: rgba(222, 228, 255, 1);
+        }
+    }
+}
+
+.active {
+    color: rgba(1, 94, 245, 1);
+}

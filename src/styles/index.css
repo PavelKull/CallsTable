@@ -1,0 +1,52 @@
+@font-face {
+    font-family: 'sf-pro-display';
+    src: url('../assets/fonts/sf-pro-display-thin.woff2') format('woff2');
+    font-weight: 100;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'sf-pro-display';
+    src: url('../assets/fonts/sf-pro-display-regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'sf-pro-display';
+    src: url('../assets/fonts/sf-pro-display-medium.woff2') format('woff2');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'sf-pro-display';
+    src: url('../assets/fonts/sf-pro-display-black.woff2') format('woff2');
+    font-weight: 900;
+    font-style: normal;
+}
+
+:root {
+    --primary-color: rgba(234, 0, 41, 1);
+    --secondary-color: rgba(245, 58, 49, 1);
+    --disabled-color: rgba(190, 197, 204, 1);
+    --main-background-color: rgba(241, 244, 249, 1);
+    --font-primary: 'sf-pro-display', sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-primary);
+}
+
+html,
+body {
+    height: auto;
+    overflow: visible;
+    font-family: var(--font-primary);
+    background-color: white;
+    color: black;
+    background-color: var(--main-background-color);
+}
